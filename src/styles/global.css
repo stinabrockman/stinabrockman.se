@@ -102,11 +102,21 @@ img {
   text-decoration: none;
 }
 
+/* Show the whole image, fitted inside a square box and resting in its bottom
+   left corner, so the titles line up under the images and across each row. */
 .work-grid img {
   width: 100%;
   aspect-ratio: 1;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: left bottom;
   transition: opacity 0.2s;
+}
+
+/* One column (phones): no need to line up rows, so use each image's own shape. */
+@media (max-width: 37rem) {
+  .work-grid img {
+    aspect-ratio: auto;
+  }
 }
 
 .work-grid a:hover img {
