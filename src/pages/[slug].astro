@@ -12,10 +12,14 @@ const { Content } = await render(page);
 ---
 
 <Base title={page.data.title}>
-  <article class="text-page">
-    <h1 class="text-page-title">{page.data.title}</h1>
-    <div class="text-page-body">
-      <Content />
+  <article>
+    <header class="page-head">
+      <h1 class="page-title">{page.data.title}</h1>
+    </header>
+    <div class="text-body">
+      <div class="prose">
+        <Content />
+      </div>
     </div>
   </article>
 </Base>

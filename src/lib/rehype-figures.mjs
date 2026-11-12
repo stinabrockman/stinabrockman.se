@@ -1,6 +1,7 @@
-// On work pages, turn an image paragraph and the line after it into
+// On work pages, wrap the text before the first image in <div class="statement">,
+// and turn an image paragraph and the line after it into
 //   <figure><img><figcaption>caption</figcaption></figure>
-// so each photo can hang with its title as a wall label. Both of these work:
+// so each photo is shown with its title as a caption. Both of these work:
 //
 //   ![](./photo.jpg)        ![](./photo.jpg)
 //                           Title
@@ -47,6 +48,14 @@ export default function rehypeFigures() {
       }
       out.push({ type: "element", tagName: "figure", properties: {}, children });
     }
-    tree.children = out;
+    // Text before the first image is the series statement.
+    const first = out.findIndex((n) => isEl(n, "figure"));
+    const lead = first === -1 ? out : out.slice(0, first);
+    if (lead.some((n) => !isWhitespace(n))) {
+      const statement = { type: "element", tagName: "div", properties: { className: ["statement"] }, children: lead };
+      tree.children = [statement, ...(first === -1 ? [] : out.slice(first))];
+    } else {
+      tree.children = out;
+    }
   };
 }

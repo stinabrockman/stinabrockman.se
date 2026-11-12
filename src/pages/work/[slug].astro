@@ -9,35 +9,26 @@ export async function getStaticPaths() {
   );
   return works.map((work, i) => ({
     params: { slug: work.id },
-    props: { work, prev: works[i - 1], next: works[i + 1] },
+    // After the last work, continue with the first.
+    props: { work, next: works[(i + 1) % works.length] },
   }));
 }
 
-const { work, prev, next } = Astro.props;
+const { work, next } = Astro.props;
 const { Content } = await render(work);
 ---
 
 <Base title={work.data.title}>
-  <article class="room">
-    <h1 class="room-title">{work.data.title}</h1>
+  <article class="page-head work">
+    <h1 class="page-title">{work.data.title}</h1>
     <Content />
   </article>
-  <nav class="pager" aria-label="Other works">
-    {
-      prev && (
-        <a class="pager-prev" href={url(`/work/${prev.id}`)}>
-          <span class="pager-dir">Previous work</span>
-          <span class="pager-title">{prev.data.title}</span>
-        </a>
-      )
-    }
-    {
-      next && (
-        <a class="pager-next" href={url(`/work/${next.id}`)}>
-          <span class="pager-dir">Next work</span>
-          <span class="pager-title">{next.data.title}</span>
-        </a>
-      )
-    }
-  </nav>
+  {
+    next && next.id !== work.id && (
+      <a class="next-work" href={url(`/work/${next.id}`)}>
+        <span class="next-work-label">Next work</span>
+        <span class="next-work-title">{next.data.title}</span>
+      </a>
+    )
+  }
 </Base>

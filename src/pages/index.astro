@@ -7,44 +7,73 @@ import { url } from "../lib/url";
 const works = (await getCollection("work", (w) => !w.data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const [featured] = works;
 
-// Works hang on a shared centre line, sized by their real print size. The
-// largest prints (110 cm) get the full size; the scale follows the square
-// root of the long edge so small prints stay legible.
-const LARGEST_CM = 110;
-const UNKNOWN_SCALE = 0.8;
-function scaleFor(size?: string) {
+// Larger prints get more columns in the 12-column index. The largest number
+// in `size` is the long edge in cm; works without a size get a middle width.
+// Portrait images get one column less so they don't tower over the row.
+function columnsFor(size: string | undefined, portrait: boolean) {
   const numbers = (size?.match(/\d+(?:[.,]\d+)?/g) ?? []).map((n) => parseFloat(n.replace(",", ".")));
-  if (!numbers.length) return UNKNOWN_SCALE;
-  return Math.min(1, Math.sqrt(Math.max(...numbers) / LARGEST_CM));
+  const longEdge = numbers.length ? Math.max(...numbers) : 60;
+  const columns = longEdge >= 90 ? 6 : longEdge >= 55 ? 5 : 4;
+  return portrait ? columns - 1 : columns;
+}
+
+// Two works per row, the right one dropped lower (CSS). Rows alternate:
+// left flush with right inset by a column, then the other way round, as far
+// as the two widths leave room for it.
+const placed = works.map((w) => {
+  const { width, height } = w.data.cover;
+  return { work: w, columns: columnsFor(w.data.size, height > width) };
+});
+const styles: string[] = [];
+for (let i = 0; i < placed.length; i += 2) {
+  const row = i / 2 + 1;
+  const left = placed[i].columns;
+  const right = placed[i + 1]?.columns ?? 0;
+  const spare = 12 - left - right; // free columns between the two
+  const leftInset = row % 2 === 0 && spare >= 1 ? 1 : 0;
+  const rightInset = row % 2 === 1 && spare >= 1 ? 1 : 0;
+  styles.push(`grid-row: ${row}; grid-column: ${1 + leftInset} / span ${left}`);
+  if (right) styles.push(`grid-row: ${row}; grid-column: ${13 - right - rightInset} / span ${right}`);
 }
 ---
 
-<Base>
-  <h1 class="visually-hidden">Stina Brockman – works</h1>
-  <ul class="wall">
+<Base overlay>
+  {
+    featured && (
+      <section class="hero">
+        <Image
+          class="hero-image"
+          src={featured.data.cover}
+          alt=""
+          layout="full-width"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <h1 class="hero-name">Stina Brockman</h1>
+        <a class="hero-credit" href={url(`/work/${featured.id}`)}>
+          {featured.data.title}
+        </a>
+      </section>
+    )
+  }
+
+  <ul class="index" aria-label="Works">
     {
-      works.map((w, i) => {
-        const { width, height } = w.data.cover;
-        const shape = width >= height ? "landscape" : "portrait";
+      placed.map(({ work: w, columns }, i) => {
         return (
-          <li class={`hung ${shape}`} style={`--scale: ${scaleFor(w.data.size).toFixed(3)}`}>
+          <li class:list={["index-item", { "is-right": i % 2 === 1 }]} style={styles[i]}>
             <a href={url(`/work/${w.id}`)}>
-              <span class="frame">
-                <span class="piece">
-                  <Image
-                    src={w.data.cover}
-                    alt=""
-                    layout="constrained"
-                    width={shape === "landscape" ? 900 : Math.round((900 * width) / height)}
-                    loading={i < 4 ? "eager" : "lazy"}
-                  />
-                  <span class="label">
-                    <span class="label-title">{w.data.title}</span>
-                    {w.data.size && <span class="label-size">{w.data.size}</span>}
-                  </span>
-                </span>
-              </span>
+              <Image
+                src={w.data.cover}
+                alt=""
+                layout="constrained"
+                width={1400}
+                sizes={`(min-width: 48rem) ${Math.round((columns / 12) * 100)}vw, 100vw`}
+              />
+              <span class="index-title">{w.data.title}</span>
+              {w.data.size && <span class="index-size">{w.data.size}</span>}
             </a>
           </li>
         );

@@ -7,9 +7,11 @@ import "../styles/global.css";
 
 interface Props {
   title?: string;
+  // Header sits on top of a full-screen image (front page).
+  overlay?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, overlay = false } = Astro.props;
 const siteTitle = "Stina Brockman";
 const pages = (await getCollection("pages")).sort((a, b) => a.data.order - b.data.order);
 const nav = [{ path: "/", label: "Work" }, ...pages.map((p) => ({ path: `/${p.id}`, label: p.data.title }))];
@@ -29,7 +31,7 @@ const isCurrent = (path: string) =>
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <title>{title ? `${title} — ${siteTitle}` : siteTitle}</title>
   </head>
-  <body>
+  <body class:list={{ "has-overlay": overlay }}>
     <a class="skip-link" href="#content">Skip to content</a>
     <header class="site-header">
       <a class="site-title" href={url("/")}>{siteTitle}</a>

@@ -1,26 +1,26 @@
 /*
-  Gallery wall. Prints hang on a pale grey wall, as silver gelatin prints
-  often do in museums, with small wall labels beside them. No accent colour:
-  nothing should compete with the photographs.
+  White page, black type, large photographs. The type is big and tight where
+  it names things (her name, page and work titles) and small everywhere else,
+  so the images carry the page.
 */
 :root {
-  --wall: #e4e3df;
-  --ink: #232322;
-  --label: #5f5f5b;
-  --hairline: #c9c8c3;
-  --paper: #fafaf8;
+  --bg: #ffffff;
+  --ink: #000000;
+  --muted: #6b6b6b;
+  --hairline: #e3e3e3;
+  --on-image: #ffffff;
 
   --font: "Familjen Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
 
-  /* Type scale (px at 16px root): 14 / 17 / 21 / 28 / 42 */
-  --step--1: 0.875rem;
-  --step-0: 1.0625rem;
-  --step-1: 1.3125rem;
-  --step-2: 1.75rem;
-  --step-3: clamp(2rem, 1.4rem + 2.4vw, 2.625rem);
+  /* Text sizes (px at 16px root): 14 / 17 / 21, plus two display sizes */
+  --small: 0.875rem;
+  --body: 1.0625rem;
+  --lead: 1.3125rem;
+  --display: clamp(2.75rem, 1.5rem + 5.5vw, 6.5rem);
+  --giant: clamp(3.5rem, 13.5vw, 14rem);
 
-  --gutter: clamp(1rem, 4vw, 3.5rem);
-  --measure: 34em;
+  --gutter: clamp(1rem, 3.5vw, 3rem);
+  --measure: 36em;
 
   color-scheme: light;
 }
@@ -43,16 +43,15 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--wall);
+  background: var(--bg);
   color: var(--ink);
-  font-size: var(--step-0);
+  font-size: var(--body);
   line-height: 1.5;
 }
 
 main {
   flex: 1;
   width: 100%;
-  padding: 0 var(--gutter);
 }
 
 a {
@@ -62,7 +61,7 @@ a {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid currentColor;
   outline-offset: 4px;
 }
 
@@ -74,7 +73,7 @@ img {
 
 ::selection {
   background: var(--ink);
-  color: var(--paper);
+  color: var(--bg);
 }
 
 .visually-hidden {
@@ -91,28 +90,29 @@ img {
   left: var(--gutter);
   top: -3rem;
   padding: 0.5rem 0.75rem;
-  background: var(--paper);
-  z-index: 1;
+  background: var(--bg);
+  color: var(--ink);
+  z-index: 3;
 }
 
 .skip-link:focus {
   top: 0.75rem;
 }
 
-/* Header and footer */
+/* Header */
 
 .site-header {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.5rem 2.5rem;
-  padding: 1.75rem var(--gutter) 0;
+  gap: 0.5rem 2rem;
+  padding: 1.25rem var(--gutter);
+  font-size: var(--body);
 }
 
 .site-title {
-  font-size: var(--step-1);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
 }
@@ -120,301 +120,345 @@ img {
 .site-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
+  gap: 0.25rem 1.25rem;
 }
 
 .site-nav a {
   text-decoration: none;
-  color: var(--label);
 }
 
-.site-nav a:hover {
-  color: var(--ink);
-}
-
+.site-nav a:hover,
 .site-nav a[aria-current="page"] {
-  color: var(--ink);
   text-decoration: underline;
 }
 
+/* On the front page the header sits on the photograph. Her name is set
+   large in the hero, so the small one in the header is hidden there. */
+.has-overlay .site-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  color: var(--on-image);
+}
+
+.has-overlay .site-title {
+  visibility: hidden;
+}
+
+/* Footer */
+
 .site-footer {
-  padding: 6rem var(--gutter) 2rem;
-  color: var(--label);
-  font-size: var(--step--1);
+  margin-top: clamp(6rem, 14vw, 12rem);
+  padding: 1.25rem var(--gutter) 1.5rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--muted);
+  font-size: var(--small);
 }
 
-/* Wall labels: title in italic, as artwork titles are, details below. */
+/* Front page: full-screen photograph with her name over it */
 
-.label {
-  display: block;
-  font-size: var(--step--1);
-  line-height: 1.4;
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 28rem;
+  overflow: hidden;
+  color: var(--on-image);
+  background: #2a2c30;
 }
 
-.label-title {
-  display: block;
-  font-style: italic;
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.label-size {
+/* Darken the top and bottom only enough to keep the white type readable. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.25), transparent 22%, transparent 55%, rgb(0 0 0 / 0.45));
+}
+
+.hero-name {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(1rem, 3vw, 2.5rem);
+  z-index: 1;
+  margin: 0;
+  font-size: var(--giant);
+  font-weight: 500;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+}
+
+.hero-credit {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  z-index: 1;
+  font-size: var(--small);
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.hero-credit:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-image {
+    animation: hero-in 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero-name {
+    animation: name-in 1.1s 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+    }
+  }
+
+  @keyframes name-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.25em);
+    }
+  }
+}
+
+/* Front page: index of works, two per row, staggered. Column spans and
+   positions are set per work in index.astro. */
+
+.index {
+  list-style: none;
+  margin: clamp(5rem, 12vw, 10rem) 0 0;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: clamp(4rem, 9vw, 9rem);
+  align-items: start;
+}
+
+.index-item.is-right {
+  margin-top: clamp(4rem, 14vw, 14rem);
+}
+
+.index-item a {
   display: block;
-  color: var(--label);
+  text-decoration: none;
+}
+
+.index-item img {
+  width: 100%;
+}
+
+.index-title {
+  display: block;
+  margin-top: 0.85rem;
+  font-size: var(--lead);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.index-size {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: var(--small);
   font-variant-numeric: tabular-nums;
 }
 
-/*
-  Front page: every work hangs on the same centre line inside a frame as
-  tall as the largest print. --scale (set per work from its print size)
-  sizes the image's long edge, so small contact prints hang small.
-*/
-
-.wall {
-  --long: clamp(13rem, 24vw, 22rem);
-  list-style: none;
-  margin: 0;
-  padding: clamp(3rem, 10vh, 7rem) 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: clamp(3.5rem, 9vh, 6rem) clamp(2.5rem, 6vw, 6rem);
-}
-
-.hung a {
-  display: block;
-  text-decoration: none;
-}
-
-/* The frame is as tall as the largest print; the image hangs centred in it
-   and its label sits just under the image, like a wall label. */
-.hung .frame {
-  display: flex;
-  align-items: center;
-  height: var(--long);
-}
-
-.hung .piece {
-  position: relative;
-}
-
-.hung.landscape img {
-  width: calc(var(--long) * var(--scale));
-}
-
-.hung.portrait img {
-  width: auto;
-  height: calc(var(--long) * var(--scale));
-}
-
-.hung .label {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: max-content;
-  max-width: 16rem;
-  padding-top: 0.75rem;
-}
-
-.hung a:hover .label-title {
+.index-item a:hover .index-title {
   text-decoration: underline;
-}
-
-/* Phones: one work per row, no shared frame height. */
-@media (max-width: 40rem) {
-  .wall {
-    --long: min(80vw, 22rem);
-    flex-direction: column;
-    padding-top: 2.5rem;
-    row-gap: 3rem;
-  }
-
-  .hung .frame {
-    height: auto;
-  }
-
-  .hung .label {
-    position: static;
-  }
-}
-
-/*
-  Work pages: the series text comes first, like the panel at the entrance
-  to a room. Then each photograph hangs on its own, with its label at the
-  lower right.
-*/
-
-.room {
-  padding-top: clamp(2.5rem, 8vh, 5rem);
-}
-
-.room-title {
-  font-size: var(--step-3);
-  font-weight: 450;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  margin: 0 0 1.25rem;
-}
-
-.room > :not(figure, .room-title) {
-  max-width: var(--measure);
-  margin: 0 0 1em;
-}
-
-.room > h2,
-.room > h3,
-.room > h4 {
-  font-size: var(--step-0);
-  font-weight: 600;
-  margin: 2em 0 0.5em;
-}
-
-.room figure {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: end;
-  column-gap: 1.5rem;
-  margin: clamp(5rem, 16vh, 10rem) 0 0;
-}
-
-.room figure img {
-  grid-column: 2;
-  width: auto;
-  max-height: 82vh;
-  max-width: min(60rem, 100vw - 2 * var(--gutter) - 20rem);
-}
-
-.room figcaption {
-  grid-column: 3;
-  font-size: var(--step--1);
-  font-style: italic;
-  line-height: 1.4;
-  max-width: 14em;
-}
-
-@media (max-width: 60rem) {
-  .room figure {
-    grid-template-columns: 1fr;
-    margin-top: 4rem;
-  }
-
-  .room figure img {
-    grid-column: 1;
-    max-width: 100%;
-    max-height: 85vh;
-  }
-
-  .room figcaption {
-    grid-column: 1;
-    margin-top: 0.75rem;
-  }
-}
-
-.pager {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-top: clamp(5rem, 16vh, 10rem);
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--hairline);
-}
-
-.pager a {
-  text-decoration: none;
-}
-
-.pager-next {
-  margin-left: auto;
-  text-align: right;
-}
-
-.pager-dir {
-  display: block;
-  font-size: var(--step--1);
-  color: var(--label);
-}
-
-.pager-title {
-  display: block;
-  font-size: var(--step-1);
-  font-style: italic;
-}
-
-.pager a:hover .pager-title {
-  text-decoration: underline;
-}
-
-/*
-  Text pages (CV, news, texts, interviews, contact): title in a narrow left
-  column, text in a readable measure beside it.
-*/
-
-.text-page {
-  display: grid;
-  grid-template-columns: minmax(10rem, 1fr) minmax(0, 3fr);
-  column-gap: var(--gutter);
-  padding-top: clamp(2.5rem, 8vh, 5rem);
-}
-
-.text-page-title {
-  font-size: var(--step-3);
-  font-weight: 450;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  margin: 0;
-}
-
-.text-page-body {
-  max-width: var(--measure);
-}
-
-.text-page-body > :first-child {
-  margin-top: 0.35rem;
 }
 
 @media (max-width: 48rem) {
-  .text-page {
+  .index {
     grid-template-columns: 1fr;
+    row-gap: 3.5rem;
   }
 
-  .text-page-title {
-    margin-bottom: 2rem;
+  /* Overrides the per-work placement set inline. */
+  .index-item {
+    grid-row: auto !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .index-item.is-right {
+    margin-top: 0;
   }
 }
 
-.text-page-body h1,
-.text-page-body h2 {
-  font-size: var(--step-1);
+/* Page heads: large title, text beside it on wide screens */
+
+.page-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: end;
+  padding: clamp(3rem, 9vw, 8rem) var(--gutter) 0;
+}
+
+.page-title {
+  grid-column: 1 / span 7;
+  margin: 0;
+  font-size: var(--display);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.page-head .statement {
+  grid-column: 9 / span 4;
+  font-size: var(--small);
+  line-height: 1.5;
+}
+
+.statement > :first-child {
+  margin-top: 0;
+}
+
+.statement > :last-child {
+  margin-bottom: 0;
+}
+
+.statement h2,
+.statement h3,
+.statement h4 {
+  font-size: inherit;
+  font-weight: 600;
+  margin: 1.25em 0 0.25em;
+}
+
+@media (max-width: 60rem) {
+  .page-title,
+  .page-head .statement {
+    grid-column: 1 / -1;
+  }
+
+  .page-head .statement {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Work pages: one large photograph after another, caption underneath.
+   The figures share the page-head grid and span all of it. */
+
+.work figure {
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: table;
+  margin: clamp(4rem, 10vh, 8rem) auto 0;
+}
+
+.work figure img {
+  width: auto;
+  max-height: 88vh;
+  max-width: calc(100vw - 2 * var(--gutter));
+}
+
+.work figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  padding-top: 0.75rem;
+  font-size: var(--small);
+}
+
+.next-work {
+  display: block;
+  margin: clamp(6rem, 14vw, 12rem) var(--gutter) 0;
+  text-decoration: none;
+}
+
+.next-work-label {
+  display: block;
+  color: var(--muted);
+  font-size: var(--small);
+}
+
+.next-work-title {
+  display: block;
+  font-size: var(--display);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.next-work:hover .next-work-title {
+  text-decoration: underline;
+  text-decoration-thickness: 0.04em;
+}
+
+/* Text pages (CV, news, texts, interviews, contact) */
+
+.text-body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding: clamp(2rem, 4vw, 3.5rem) var(--gutter) 0;
+}
+
+.text-body > .prose {
+  grid-column: 5 / span 7;
+  max-width: var(--measure);
+}
+
+@media (max-width: 60rem) {
+  .text-body > .prose {
+    grid-column: 1 / -1;
+  }
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h1,
+.prose h2 {
+  font-size: var(--lead);
   font-weight: 500;
   line-height: 1.25;
+  letter-spacing: -0.01em;
   margin: 2.5em 0 0.6em;
 }
 
-.text-page-body h3,
-.text-page-body h4 {
-  font-size: var(--step-0);
+.prose h3,
+.prose h4 {
+  font-size: var(--body);
   font-weight: 600;
   line-height: 1.3;
   margin: 2em 0 0.4em;
 }
 
-.text-page-body p,
-.text-page-body ul {
+.prose p,
+.prose ul {
   margin: 0 0 1em;
 }
 
-.text-page-body ul {
+.prose ul {
   padding-left: 1.1em;
 }
 
-.text-page-body li + li {
+.prose li + li {
   margin-top: 0.4em;
 }
 
-.text-page-body img {
+.prose img {
   margin: 2.5rem 0 1rem;
 }
 
-.text-page-body em {
-  color: var(--label);
+.prose em {
+  color: var(--muted);
 }
 
 /* CV tables: year column and text, no header row. */
@@ -430,14 +474,14 @@ thead {
 
 td {
   vertical-align: top;
-  padding: 0.3rem 0;
+  padding: 0.35rem 0;
   border-top: 1px solid var(--hairline);
 }
 
 td:first-child {
   width: 5.5em;
   padding-right: 1rem;
-  color: var(--label);
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
