@@ -15,7 +15,7 @@ Stina Brockman (f.1951) hör till de konstnärer och fotografer som skapat sin e
 
 Hennes verk har visats av Moderna Museet, Artipelag, Kulturhuset, Marabouparken och Hasselblad mfl. Det tyska förlaget Kehrer gav 2016 ut boken The Sensation of Falling. I filmen hör ni henne berätta om en spännande fotografisk resa.
 
-Läs mer om Stina Brockman och hennes arbete [här](/).
+Läs mer om Stina Brockman och hennes arbete [här](https://www.stinabrockman.se).
 
 Foto, ljud och redigering: Annika Thörn Legzdins.
 

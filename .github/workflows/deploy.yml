@@ -19,7 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # Reads the Pages settings: the custom domain once one is set, otherwise
+      # stinabrockman.github.io with the base path /stinabrockman.se.
+      - id: pages
+        uses: actions/configure-pages@v6
       - uses: withastro/action@v6
+        env:
+          SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
+          SITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
   deploy:
     needs: build

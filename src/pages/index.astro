@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import { url } from "../lib/url";
 
 const works = (await getCollection("work", (w) => !w.data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -13,7 +14,7 @@ const works = (await getCollection("work", (w) => !w.data.draft)).sort(
     {
       works.map((w, i) => (
         <li>
-          <a href={`/work/${w.id}`}>
+          <a href={url(`/work/${w.id}`)}>
             <Image
               src={w.data.cover}
               alt=""

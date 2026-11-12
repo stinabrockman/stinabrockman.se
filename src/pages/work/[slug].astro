@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
   const works = (await getCollection("work", (w) => !w.data.draft)).sort(
@@ -22,7 +23,7 @@ const { Content } = await render(work);
     <Content />
   </article>
   <nav class="work-pager">
-    {prev ? <a href={`/work/${prev.id}`}>← {prev.data.title}</a> : <span />}
-    {next ? <a href={`/work/${next.id}`}>{next.data.title} →</a> : <span />}
+    {prev ? <a href={url(`/work/${prev.id}`)}>← {prev.data.title}</a> : <span />}
+    {next ? <a href={url(`/work/${next.id}`)}>{next.data.title} →</a> : <span />}
   </nav>
 </Base>
