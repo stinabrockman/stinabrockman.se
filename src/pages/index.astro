@@ -7,25 +7,48 @@ import { url } from "../lib/url";
 const works = (await getCollection("work", (w) => !w.data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+// Works hang on a shared centre line, sized by their real print size. The
+// largest prints (110 cm) get the full size; the scale follows the square
+// root of the long edge so small prints stay legible.
+const LARGEST_CM = 110;
+const UNKNOWN_SCALE = 0.8;
+function scaleFor(size?: string) {
+  const numbers = (size?.match(/\d+(?:[.,]\d+)?/g) ?? []).map((n) => parseFloat(n.replace(",", ".")));
+  if (!numbers.length) return UNKNOWN_SCALE;
+  return Math.min(1, Math.sqrt(Math.max(...numbers) / LARGEST_CM));
+}
 ---
 
 <Base>
-  <ul class="work-grid">
+  <h1 class="visually-hidden">Stina Brockman – works</h1>
+  <ul class="wall">
     {
-      works.map((w, i) => (
-        <li>
-          <a href={url(`/work/${w.id}`)}>
-            <Image
-              src={w.data.cover}
-              alt=""
-              layout="full-width"
-              sizes="(min-width: 60rem) 30vw, (min-width: 36rem) 45vw, 100vw"
-              loading={i < 3 ? "eager" : "lazy"}
-            />
-            <span>{w.data.title}</span>
-          </a>
-        </li>
-      ))
+      works.map((w, i) => {
+        const { width, height } = w.data.cover;
+        const shape = width >= height ? "landscape" : "portrait";
+        return (
+          <li class={`hung ${shape}`} style={`--scale: ${scaleFor(w.data.size).toFixed(3)}`}>
+            <a href={url(`/work/${w.id}`)}>
+              <span class="frame">
+                <span class="piece">
+                  <Image
+                    src={w.data.cover}
+                    alt=""
+                    layout="constrained"
+                    width={shape === "landscape" ? 900 : Math.round((900 * width) / height)}
+                    loading={i < 4 ? "eager" : "lazy"}
+                  />
+                  <span class="label">
+                    <span class="label-title">{w.data.title}</span>
+                    {w.data.size && <span class="label-size">{w.data.size}</span>}
+                  </span>
+                </span>
+              </span>
+            </a>
+          </li>
+        );
+      })
     }
   </ul>
 </Base>

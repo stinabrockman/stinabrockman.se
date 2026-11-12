@@ -1,10 +1,12 @@
 ---
 title: "Crest Nos 1-8"
 order: 5
+size: "90 × 110 cm"
 cover: ./n-nr8.jpg
 ---
 
-#### Crest nos. 1-8
+Ed. 3 + 3 AP
+Size 90 cm x 110 cm
 
 ![](./n-nr1.jpg)
 
@@ -33,8 +35,3 @@ Nr. 3.
 ![](./n-nr2.jpg)
 
 Nr. 2.
-
-#### Crest Nos 1 -8.
-
-Ed. 3 + 3 AP
-Size 90 cm x 110 cm

@@ -4,8 +4,10 @@ import { url } from "../lib/url";
 ---
 
 <Base title="Page not found">
-  <article class="page">
-    <h1>Page not found</h1>
-    <p><a href={url("/")}>Go to the front page</a></p>
+  <article class="text-page">
+    <h1 class="text-page-title">Page not found</h1>
+    <div class="text-page-body">
+      <p>This page doesn't exist or has moved. <a href={url("/")}>See all works</a>.</p>
+    </div>
   </article>
 </Base>

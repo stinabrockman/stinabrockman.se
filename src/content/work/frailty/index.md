@@ -1,8 +1,15 @@
 ---
 title: "Frailty"
 order: 2
+size: "90 × 90 cm, 90 × 110 cm"
 cover: ./f-cheek.jpg
 ---
+
+Frailty,
+Size
+90 cm x 90 cm.
+90 cm x 110 cm.
+Ed. 3 + 3 AP.
 
 ![](./f-cheek.jpg)
 
@@ -47,9 +54,3 @@ Cave In
 ![](./f-inculcate.jpg)
 
 Inculcate
-
-Frailty,
-Size
-90 cm x 90 cm.
-90 cm x 110 cm.
-Ed. 3 + 3 AP.

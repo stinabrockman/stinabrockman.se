@@ -1,8 +1,12 @@
 ---
 title: "Dick Tracy"
 order: 7
+size: "42 × 60 cm"
 cover: ./d-guard.jpg
 ---
+
+Ed. 3 + 3 Ap
+Size 42 cm x 60 cm
 
 ![](./d-cover.jpg)
 
@@ -31,6 +35,3 @@ Thread
 ![](./d-stay.jpg)
 
 Stay
-
-Ed. 3 + 3 Ap
-Size 42 cm x 60 cm

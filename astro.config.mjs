@@ -2,6 +2,7 @@
 import { unified } from "@astrojs/markdown-remark";
 import { defineConfig } from "astro/config";
 import remarkBreaks from "remark-breaks";
+import rehypeFigures from "./src/lib/rehype-figures.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +14,8 @@ export default defineConfig({
     processor: unified({
       // A single line break in Markdown is a line break on the page.
       remarkPlugins: [remarkBreaks],
+      // On work pages, each image and its title become a figure with a caption.
+      rehypePlugins: [rehypeFigures],
     }),
   },
   image: {

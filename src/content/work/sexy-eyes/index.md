@@ -4,6 +4,8 @@ order: 3
 cover: ./s-outoftime.jpg
 ---
 
+Soloshow at Moderna Museet, Stockholm, 2001
+
 ![](./s-wasityesterday.jpg)
 
 Was it Yesterday?
@@ -31,5 +33,3 @@ Black Orpheus.
 ![](./s-yougotomyhead.jpg)
 
 You Go to My Head…
-
-Soloshow at Moderna Museet, Stockholm, 2001

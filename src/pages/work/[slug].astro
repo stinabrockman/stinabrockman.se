@@ -18,12 +18,26 @@ const { Content } = await render(work);
 ---
 
 <Base title={work.data.title}>
-  <article class="work">
-    <h1>{work.data.title}</h1>
+  <article class="room">
+    <h1 class="room-title">{work.data.title}</h1>
     <Content />
   </article>
-  <nav class="work-pager">
-    {prev ? <a href={url(`/work/${prev.id}`)}>← {prev.data.title}</a> : <span />}
-    {next ? <a href={url(`/work/${next.id}`)}>{next.data.title} →</a> : <span />}
+  <nav class="pager" aria-label="Other works">
+    {
+      prev && (
+        <a class="pager-prev" href={url(`/work/${prev.id}`)}>
+          <span class="pager-dir">Previous work</span>
+          <span class="pager-title">{prev.data.title}</span>
+        </a>
+      )
+    }
+    {
+      next && (
+        <a class="pager-next" href={url(`/work/${next.id}`)}>
+          <span class="pager-dir">Next work</span>
+          <span class="pager-title">{next.data.title}</span>
+        </a>
+      )
+    }
   </nav>
 </Base>

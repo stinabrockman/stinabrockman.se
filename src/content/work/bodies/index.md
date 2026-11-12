@@ -1,8 +1,12 @@
 ---
 title: "Bodies"
 order: 6
+size: "32.9 × 48.3 cm"
 cover: ./cover-b36.jpg
 ---
+
+Size 32,9 cm x 48,3 cm
+Ed. 3 + 3 AP
 
 ![](./b26sv.jpg)
 
@@ -33,6 +37,3 @@ cover: ./cover-b36.jpg
 ![](./b32sv.jpg)
 
 ![](./b36svv.jpg)
-
-Size 32,9 cm x 48,3 cm
-Ed. 3 + 3 AP

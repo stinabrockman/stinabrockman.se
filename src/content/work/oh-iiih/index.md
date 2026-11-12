@@ -1,8 +1,13 @@
 ---
 title: "Oh!"
 order: 4
+size: "90 × 110 cm"
 cover: ./o-iiiih.jpg
 ---
+
+Men in a room without time markers.
+Ed. 3 + 3 AP.
+Size 90 cm x 110 cm.
 
 ![](./o-ooups.jpg)
 
@@ -63,7 +68,3 @@ Yeah.
 ![](./o-iiiih.jpg)
 
 Iiiih !!!
-
-Men in a room without time markers.
-Ed. 3 + 3 AP.
-Size 90 cm x 110 cm.

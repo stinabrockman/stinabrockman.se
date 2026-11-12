@@ -1,6 +1,7 @@
 ---
 title: "Face"
 order: 9
+size: "50 × 50 cm"
 cover: ./a-05.jpg
 ---
 

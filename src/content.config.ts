@@ -22,6 +22,9 @@ const work = defineCollection({
       title: z.string(),
       // Position on the front page (lower comes first).
       order: z.number(),
+      // Print size, e.g. "90 × 110 cm". Shown on the front page, where the
+      // largest number also sets how large the work hangs.
+      size: z.string().optional(),
       // Image shown on the front page, e.g. ./a-05.jpg
       cover: image(),
       // Set to true to hide the work without deleting it.

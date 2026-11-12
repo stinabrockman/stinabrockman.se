@@ -1,8 +1,16 @@
 ---
 title: "Portraits"
 order: 8
+size: "20 × 25 cm"
 cover: ./p-sven.jpg
 ---
+
+Ed. 3 + 3 AP.
+Size 20 x 25 cm, (on 32 cm x 48 cm paper).
+Digital prints from scanned silver gelatin contact prints, 8 x 10 inches negatives.
+
+Ed. 2 AP. Silver gelatin contact prints,
+Different paper sizes from 8 x 10 inches negatives..
 
 ![](./p-sven.jpg)
 
@@ -55,12 +63,3 @@ Kiti
 ![](./p-carolina.jpg)
 
 Karolina
-
-#### Portraiture
-
-Ed. 3 + 3 AP.
-Size 20 x 25 cm, (on 32 cm x 48 cm paper).
-Digital prints from scanned silver gelatin contact prints, 8 x 10 inches negatives.
-
-Ed. 2 AP. Silver gelatin contact prints,
-Different paper sizes from 8 x 10 inches negatives..

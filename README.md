@@ -60,17 +60,18 @@ A single line break is kept as a line break.
    ---
    title: "New Series"
    order: 10
+   size: "90 × 110 cm"
    cover: ./first-image.jpg
    ---
+
+   Edition and size information.
 
    ![](./first-image.jpg)
 
    Title of the first image
-
-   Edition and size information.
    ```
 
-`order` sets the position on the front page (lower comes first). Add `draft: true` to hide a
+The text at the top is shown before the images. `order` sets the position on the front page (lower comes first). `size` is the print size; it is shown under the image on the front page, where larger prints also hang larger. It can be left out. Add `draft: true` to hide a
 work without deleting it.
 
 ### Add a news item

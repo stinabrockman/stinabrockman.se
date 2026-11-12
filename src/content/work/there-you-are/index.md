@@ -1,8 +1,11 @@
 ---
 title: "There You Are!"
 order: 1
+size: "90 × 110 cm"
 cover: ./t-1.jpg
 ---
+
+Ed. 3 + 3 AP. Size 90 x 110 cm
 
 ![](./t-1.jpg)
 
@@ -35,5 +38,3 @@ The Small One
 ![](./t-10less-red.jpg)
 
 Fire
-
-Ed. 3 + 3 AP. Size 90 x 110 cm

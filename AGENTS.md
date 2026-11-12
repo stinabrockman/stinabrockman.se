@@ -26,4 +26,6 @@ Consult these guides before working on related tasks:
 - Content is Markdown in `src/content/{pages,work}/<slug>/index.md`, with its images in the same folder; the schema is in `src/content.config.ts`. URLs match the old Squarespace site (`/work/<slug>`, `/cv-stina-brockman`, ...), so don't rename folders casually.
 - The site owner edits content in the GitHub web UI: keep the Markdown simple and hand-editable (no MDX, no components in content).
 - Markdown uses the `unified()` processor with `remark-breaks`, so a single newline is a line break.
+- On work pages, `src/lib/rehype-figures.mjs` turns each image + the line after it into a `<figure>` with a `<figcaption>` (also used as alt text). Astro caches rendered Markdown, so after changing a plugin delete `.astro/` and `node_modules/.astro/` before building.
+- Front page "wall": each work hangs on a shared centre line, scaled by the square root of its `size` frontmatter (largest number in the string, 110 cm = full size).
 - Deployed by `.github/workflows/deploy.yml` (withastro/action) on push to `main`.
