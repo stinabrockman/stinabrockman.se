@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const works = (await getCollection("work", (w) => !w.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base>
+  <ul class="work-grid">
+    {
+      works.map((w, i) => (
+        <li>
+          <a href={`/work/${w.id}`}>
+            <Image
+              src={w.data.cover}
+              alt=""
+              layout="full-width"
+              sizes="(min-width: 60rem) 30vw, (min-width: 36rem) 45vw, 100vw"
+              loading={i < 3 ? "eager" : "lazy"}
+            />
+            <span>{w.data.title}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

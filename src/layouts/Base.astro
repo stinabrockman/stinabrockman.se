@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+const siteTitle = "Stina Brockman";
+const pages = (await getCollection("pages")).sort((a, b) => a.data.order - b.data.order);
+const nav = [{ href: "/", label: "Work" }, ...pages.map((p) => ({ href: `/${p.id}`, label: p.data.title }))];
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isCurrent = (href: string) =>
+  href === "/" ? current === "/" || current.startsWith("/work") : current === href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <title>{title ? `${title} — ${siteTitle}` : siteTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-title" href="/">{siteTitle}</a>
+      <nav>
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">© {new Date().getFullYear()} {siteTitle}</footer>
+  </body>
+</html>

@@ -1,0 +1,245 @@
+:root {
+  --bg: #fff;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --rule: #e4e4e4;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --text-width: 44rem;
+  --image-width: 60rem;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  font-size: 100%;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  padding: 0 var(--gutter);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Header and footer */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding: 2rem var(--gutter) 2.5rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.site-header nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.site-header nav a:hover,
+.site-header nav a[aria-current="page"] {
+  color: var(--fg);
+}
+
+.site-footer {
+  padding: 3rem var(--gutter) 2rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* Front page grid */
+
+.work-grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 80rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 2.5rem 1.5rem;
+}
+
+.work-grid a {
+  display: block;
+  text-decoration: none;
+}
+
+.work-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+
+.work-grid a:hover img {
+  opacity: 0.85;
+}
+
+.work-grid span {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Text pages and works */
+
+.page,
+.work {
+  max-width: var(--text-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: normal;
+  margin: 0 0 2rem;
+}
+
+h2,
+h3,
+h4 {
+  font-weight: normal;
+  line-height: 1.3;
+  margin: 2.5rem 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Images in Markdown: let them fill the column. */
+.page p:has(> img:only-child),
+.work p:has(> img:only-child) {
+  margin: 2rem 0 0.5rem;
+}
+
+.page img,
+.work img {
+  display: block;
+}
+
+/* Works: images can be wider than the text, captions sit underneath. */
+.work {
+  max-width: var(--image-width);
+}
+
+.work > p:not(:has(> img)),
+.work > h2,
+.work > h3,
+.work > h4 {
+  max-width: var(--text-width);
+}
+
+.work p:has(> img) + p:not(:has(> img)) {
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.work img {
+  margin-inline: auto;
+}
+
+.work-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--image-width);
+  margin: 4rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.work-pager a {
+  text-decoration: none;
+}
+
+/* CV tables: year column + text, no header row. */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  display: none;
+}
+
+td {
+  vertical-align: top;
+  padding: 0.2rem 0;
+}
+
+td:first-child {
+  white-space: nowrap;
+  padding-right: 1.5rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Embedded videos */
+iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  margin: 2rem 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+/* Keep each photo within the screen height. */
+.work p > img {
+  width: auto;
+  max-height: 88vh;
+}
